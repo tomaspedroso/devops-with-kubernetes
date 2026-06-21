@@ -15,3 +15,6 @@ spec:
       containers:
         - name: log-output
           image: tomaspedroso/log-output
+          env:
+            - name: PORT
+              value: "3000"
