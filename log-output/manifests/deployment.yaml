@@ -1,20 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-output-dep
+  name: logoutput-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: log-output
+      app: logoutput
   template:
     metadata:
       labels:
-        app: log-output
+        app: logoutput
     spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
       containers:
-        - name: log-output
-          image: tomaspedroso/log-output
+        - name: logoutput-generator
+          image: tomaspedroso/logoutput-generator
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /shared
+        - name: logoutput-webserver
+          image: tomaspedroso/logoutput-webserver
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /shared
           env:
             - name: PORT
               value: "3000"

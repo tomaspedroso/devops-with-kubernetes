@@ -10,7 +10,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: log-output-svc
+                name: logoutput-svc
                 port:
                   number: 1001
           - path: /pingpong
