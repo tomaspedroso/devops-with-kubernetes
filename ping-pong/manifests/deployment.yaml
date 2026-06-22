@@ -12,9 +12,16 @@ spec:
       labels:
         app: pingpong
     spec:
+      volumes:
+        - name: shared-logs
+          persistentVolumeClaim:
+            claimName: logs-volume-claim
       containers:
         - name: pingpong
           image: tomaspedroso/pingpong
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /shared
           env:
             - name: PORT
               value: "3000"

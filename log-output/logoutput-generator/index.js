@@ -4,7 +4,7 @@ const randomHash = Math.random().toString(36).substr(2, 5);
 const main = () => {
   const content = `${new Date().toISOString()} ${randomHash}\n`
 
-  fs.appendFile('/shared/logs.txt', content, err => {
+  fs.writeFile('/shared/current-log.txt', content, err => {
     if (err) {
       console.error(err);
     } else {

@@ -14,7 +14,8 @@ spec:
     spec:
       volumes:
         - name: shared-logs
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: logs-volume-claim
       containers:
         - name: logoutput-generator
           image: tomaspedroso/logoutput-generator
