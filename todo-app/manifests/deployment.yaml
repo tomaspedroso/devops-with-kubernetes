@@ -12,9 +12,16 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+        - name: public-assets
+          persistentVolumeClaim:
+            claimName: todo-app-assets-pv-claim
       containers:
         - name: todo-app
           image: tomaspedroso/todo-app
+          volumeMounts:
+            - name: public-assets
+              mountPath: /app/public/assets
           env:
             - name: PORT
               value: "3000"

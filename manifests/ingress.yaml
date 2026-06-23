@@ -10,6 +10,13 @@ spec:
             pathType: Prefix
             backend:
               service:
+                name: todo-app-svc
+                port:
+                  number: 1002
+          - path: /logs
+            pathType: Prefix
+            backend:
+              service:
                 name: logoutput-svc
                 port:
                   number: 1001
