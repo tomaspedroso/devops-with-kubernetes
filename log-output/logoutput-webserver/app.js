@@ -7,7 +7,7 @@ app.get('/logs', async (req, res) => {
   try {
     const [logData, pingData] = await Promise.all([
       fs.promises.readFile('/shared/current-log.txt', 'utf8'),
-      fs.promises.readFile('/shared/ping-pong.txt', 'utf8'),
+      fetch(`${process.env.PING_PONG_URL}/pings`).then(r => r.text()),
     ]);
 
     res.send(`<pre>${logData}Ping / Pongs: ${pingData}</pre>`)

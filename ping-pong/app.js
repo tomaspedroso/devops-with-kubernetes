@@ -7,15 +7,11 @@ let counter = 0;
 app.get('/pingpong', (req, res) => {
   counter++;
   res.send(`pong ${counter}`);
-
-  fs.writeFile('/shared/ping-pong.txt', String(counter), err => {
-    if (err) {
-      console.error(err);
-    } else {
-      // done!
-    }
-  });
 });
+
+app.get('/pings', (req, res) => {
+  res.send(counter);
+})
 
 app.listen(port, () => {
   console.log(`Server started in port ${port}`);
