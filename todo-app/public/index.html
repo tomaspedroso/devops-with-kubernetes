@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <title>Todo App</title>
 </head>
 
@@ -17,17 +17,13 @@
     <img src="/assets/image.jpg" alt="Random Image" />
 
     <form>
-      <input type="text" name="todo" placeholder="Enter a new todo (max 140 characters)" maxlength="140">
+      <input type="text" id="todo-input" placeholder="Enter a new todo (max 140 characters)" maxlength="140">
       <input type="submit" value="Send">
     </form>
 
     <h2>Todos</h2>
 
-    <ul>
-      <li>Learn Kubernetes basics</li>
-      <li>Deploy application to cluster</li>
-      <li>Configure persistent volumes</li>
-    </ul>
+    <ul id="todo-list"></ul>
   </main>
 </body>
 
