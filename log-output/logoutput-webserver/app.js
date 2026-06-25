@@ -5,12 +5,20 @@ const port = process.env.PORT || 3000;
 
 app.get('/logs', async (req, res) => {
   try {
-    const [logData, pingData] = await Promise.all([
+    const [logData, infoData, pingData] = await Promise.all([
       fs.promises.readFile('/shared/current-log.txt', 'utf8'),
+      fs.promises.readFile('/config/information.txt', 'utf8'),
       fetch(`${process.env.PING_PONG_URL}/pings`).then(r => r.text()),
     ]);
 
-    res.send(`<pre>${logData}Ping / Pongs: ${pingData}</pre>`)
+    res.send(
+      '<pre>' +
+      `file content: ${infoData}` +
+      `env variable: MESSAGE=${process.env.MESSAGE}\n` +
+      logData +
+      `Ping / Pongs: ${pingData}` +
+      '</pre>'
+    );
   } catch (err) {
     console.error(err);
     res.status(500).send('Error reading files');
