@@ -21,7 +21,7 @@ const updateImage = async () => {
   }
 
   try {
-    const response = await fetch('https://picsum.photos/1200');
+    const response = await fetch(process.env.PICSUM_URL);
     const buffer = await response.arrayBuffer();
     fs.writeFileSync('./public/assets/image.jpg', Buffer.from(buffer));
   } catch (err) {

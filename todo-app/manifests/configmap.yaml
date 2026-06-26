@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: todoapp-configmap
+data:
+  PORT: "3000"
+  PICSUM_URL: "https://picsum.photos/1200"

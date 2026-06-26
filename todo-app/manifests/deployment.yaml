@@ -23,6 +23,6 @@ spec:
           volumeMounts:
             - name: public-assets
               mountPath: /app/public/assets
-          env:
-            - name: PORT
-              value: "3000"
+          envFrom:
+            - configMapRef:
+                name: todoapp-configmap
