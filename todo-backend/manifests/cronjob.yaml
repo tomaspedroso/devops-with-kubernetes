@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: project
+  name: generate-todos
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 60
+      template:
+        spec:
+          containers:
+            - name: generate-todos
+              image: curlimages/curl
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  TODO=$(curl -Ls -o /dev/null -w "%{url_effective}" https://en.wikipedia.org/wiki/Special:Random)
+                  curl -X POST -H "Content-Type: application/json" -d "{\"text\": \"Read $TODO\"}" http://todo-backend-svc:1004/todos
+                  echo "Added todo: Read $TODO"
+          restartPolicy: Never
