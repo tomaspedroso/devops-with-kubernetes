@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const pino = require('pino');
+const pinoHttp = require('pino-http');
 
+const logger = pino({ name: 'todo-backend' });
 const app = express();
 const port = process.env.PORT || 3001;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -12,6 +15,7 @@ const initDb = async () => {
 
 app.use(cors());
 app.use(express.json());
+app.use(pinoHttp({ logger }));
 
 app.get('/todos', async (req, res) => {
   const result = await pool.query('SELECT text FROM todos ORDER BY id');
@@ -23,6 +27,9 @@ app.post('/todos', async (req, res) => {
   if (!text) {
     return res.status(400).send('Todo text cannot be empty');
   }
+  if (text.length > 140) {
+    return res.status(400).send('Todo text cannot exceed 140 characters');
+  }
 
   await pool.query('INSERT INTO todos (text) VALUES ($1)', [text]);
   res.send('New todo added');
@@ -30,6 +37,6 @@ app.post('/todos', async (req, res) => {
 
 initDb().then(() => {
   app.listen(port, () => {
-    console.log(`todo-backend app listening on port ${port}`);
+    logger.info(`todo-backend app listening on port ${port}`);
   });
 });
